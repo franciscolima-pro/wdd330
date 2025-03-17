@@ -5,9 +5,9 @@ import { getParam } from "./utils.mjs";
 const dataSource = new ProductData("tents");
 const productId = getParam('product');
 
-// dataSource.findProductById(productId).then((product) => {
-//   console.log(product);
-// });
+dataSource.findProductById(productId).then((product) => {
+  console.log(product);
+});
 
 const product = new ProductDetails(productId, dataSource);
 product.init();
