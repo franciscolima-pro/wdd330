@@ -20,11 +20,10 @@ export function setLocalStorage(key, data) {
     currentCart = [];
   }
 
-  // Adiciona o novo item ao array
-  currentCart.push(data);
-
-  // Salva o array atualizado no localStorage
-  localStorage.setItem(key, JSON.stringify(currentCart));
+  if (!currentCart.some(item => item.Id === data.Id)) {
+    currentCart.push(data);
+    localStorage.setItem(key, JSON.stringify(currentCart));
+  }
 }
 
 // set a listener for both touchend and click
@@ -41,4 +40,17 @@ export function getParam(param){
   const urlParams = new URLSearchParams(queryString);
   const product = urlParams.get(param);
   return product;
+}
+
+export function renderListWithTemplate(templateFn, parentElement, list, position = "afterbegin", clear = false) {
+  if (!parentElement) {
+    console.error("Erro: O elemento pai não existe.");
+    return;
+  }
+
+  if (clear) {
+    parentElement.innerHTML = ""; // Limpa o conteúdo se `clear` for true
+  }
+
+  parentElement.insertAdjacentHTML(position, list.map(templateFn).join(""));
 }
