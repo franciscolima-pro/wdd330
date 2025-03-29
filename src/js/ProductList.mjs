@@ -22,14 +22,12 @@ export default class ProductList {
 
     async init(){
         const list = await this.dataSource.getData(this.category);
-        // this.productList = await this.dataSource.getData(); //***antiga forma, como funcionava antes
-        console.log("Produtos carregados:", this.productList);
-        this.renderList()
+        this.renderList(list)
         document.querySelector(".title").textContent = this.category;
     }
 
     renderList(list){
-        renderListWithTemplate(productCardTemplate, this.listElement, list);
+        renderListWithTemplate(productCardTemplate, this.listElement, list, "beforeend", true);
     }  
 
 }
