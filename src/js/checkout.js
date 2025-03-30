@@ -8,8 +8,17 @@ const order = new CheckoutProcess('cartTotal', '.order-summary');
 order.init();
 order.startProcess();
 
-document.querySelector("#checkoutSubmit").addEventListener("click", (e) => {
+document.querySelector("#checkoutSubmit").addEventListener("click", async (e) => {
     e.preventDefault();
-  
-    order.checkout();
+    const myForm = document.forms[0];
+    const validForm = myForm.checkValidity();
+    myForm.reportValidity();
+    if(validForm) {
+      await order.checkout();
+      localStorage.removeItem('so-cart');
+      localStorage.removeItem('cartTotal');
+      setTimeout(() => {
+        window.location.href = "../checkout/success.html";
+      }, 100);
+    }
   });
